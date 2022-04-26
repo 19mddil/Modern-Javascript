@@ -1,0 +1,13 @@
+var x = "hello ''' ''' world";
+console.log(x);
+var y = 'hello """ """ world';
+console.log(y);
+var z = "hello \"\"world7\\";
+console.log(z);
+x = "hello \t world";
+console.log(x); 
+x = "123t4";
+z = parseInt(x);
+console.log(z.toString().length);
+console.log(x);
+console.log(z);
