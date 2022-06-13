@@ -1,0 +1,1 @@
+you can use functions by script loading.
