@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p>Hello</p>
+
+</body>
+<script>
+    function loadScript(src, callback) {
+        let script = document.createElement('script');
+        script.src = src;
+        script.onload = () => callback(null, script);
+        script.onerror = () => callback(new Error(`script load error from ${src}`));
+        document.head.append(script);
+    }
+    /*
+        loadScript('js/1.js', (error, script) => {
+            if (error) handleError(error);
+            else loadScript('js/2.js', (error, script) => {
+                if (error) handleError(error);
+                else loadScript('js/3.js', (error, script) => {
+                    sayHelloOne();
+                    sayHelloTwo();
+                    sayHelloThree();
+                })
+            })
+        })
+    */
+    loadScript('js/1.js', step1);
+
+    function step1(error, script) {
+        if (error) {
+            handleError(error);
+        } else {
+            loadScript('js/2.js', step2);
+        }
+    }
+
+    function step2(error, script) {
+        if (error) {
+            handleError(error);
+        } else {
+            loadScript('js/3.js', step3);
+        }
+    }
+
+    function step3(error, script) {
+        if (error) {
+            handleError(error);
+        } else {
+            sayHelloOne();
+            sayHelloTwo();
+            sayHelloThree();
+        }
+    }
+</script>
+
+</html>
