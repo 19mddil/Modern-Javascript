@@ -81,7 +81,7 @@
             })
             .finally(() => {
                 document.body.style.backgroundColor = "white";
-                return new Promise(resolve => setTimeout(resolve));
+                //return new Promise(resolve => setTimeout(resolve));
             })
             .then(githubuser => get3secImage(githubuser))
             .then(user => console.log(`finished downloading ${user.name}`))
