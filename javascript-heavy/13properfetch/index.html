@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let loadJason = (link) => {
+            return fetch(link)
+                .then(response => {
+                    if (response.status == 404) {
+                        throw new Error("bad link or username not found");
+                    } else {
+                        return response.json();
+                    }
+                })
+        };
+        let link = `https://api.github.com/users/19mddil`;
+        let promise = new Promise(resolve => setTimeout(() => resolve(loadJason(link)), 2000)); /** doesn't work.**/
+
+        promise.then(githubuser => console.log(githubuser.name));
+    </script>
+</body>
+
+</html>
