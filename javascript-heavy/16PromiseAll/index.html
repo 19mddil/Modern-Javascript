@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // Promise.all([
+        //     new Promise(resolve => setTimeout(() => resolve(1), 1000)),
+        //     new Promise(resolve => setTimeout(() => resolve(2), 2000)),
+        //     new Promise(resovle => setTimeout(() => resovle(3), 3000))
+        // ]).then(results => results.forEach(result => console.log(result)));
+
+        let urls = [
+            'https://api.github.com/users/19mddil',
+            'https://api.github.com/users/psimanta',
+            'https://api.github.com/users/wsvincent'
+        ];
+        // const array1 = [1, 4, 9, 16];
+
+        // // pass a function to map
+        // const map1 = array1.map(x => x * 2);
+
+        // console.log(map1);
+        // // expected output: Array [2, 8, 18, 32]
+        let names = ['19mddil', 'psimanta', 'wsvincent'];
+        let requests = names.map(name => fetch(`https://api.github.com/users/${name}`));
+        Promise.all(requests)
+            .then(responses => {
+                responses.forEach(
+                    response => console.log(response.url + " " + response.status)
+                );
+                return responses;
+            })
+            .then(rs => {
+                let arr = rs.map(r => r.json());
+                console.log(arr);
+                return Promise.all(arr); //Promise.all(iterable) allows non-promise “regular” values in iterable
+            }) //
+            .then(users => users.forEach(user => console.log(user.name)));
+    </script>
+</body>
+
+</html>

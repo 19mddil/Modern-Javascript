@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let names = ['19mddil', 'psimanta', 'somedude8859'];
+        let requests = names.map(name => fetch(`https://api.github.com/users/${name}`).then(response => {
+            if (response.status == 404) {
+                throw new Error("");
+            }
+            return response.json();
+        }));
+        Promise.allSettled(requests)
+            .then(responses => {
+                console.log(responses instanceof Promise);
+                let jsons = [];
+                responses.forEach(
+                    (response, num) => {
+                        if (response.status == "fulfilled") {
+                            console.log(`https://api.github.com/users/${names[num]}` + " " + response.status);
+                            jsons.push(response.value);
+                        }
+                        if (response.status == "rejected") {
+                            console.log("here");
+                            console.log(`https://api.github.com/users/${names[num]}` + " " + response.reason);
+                        }
+                    }
+                );
+                jsons.forEach((result, n) => {
+                    console.log(n + " " + result.message);
+                })
+            })
+    </script>
+</body>
+
+</html>
