@@ -70,9 +70,11 @@
         });
     };
 
-    function demo() {
-        let username = prompt("Enter user name", "19mddil");
-        document.body.style.backgroundColor = "red";
+    async function demo() {
+        let username;;
+        await Promise.resolve().then(() => document.body.style.backgroundColor = 'red');
+        await Promise.resolve().then(() => username = prompt("enter the name", "19mddil"));
+
         let link = `https://api.github.com/users/${username}`;
         //let promise = new Promise(resolve => setTimeout(() => resolve(loadJason(link)), 2000));
         let promise = loadJason(link);

@@ -23,12 +23,12 @@
         .then(user => fetch(`https://api.github.com/users/${user.name}`))
         .then(response => {
             if (response.status == 404) {
-                throw new Error("Username Not Found");
+                throw new Error("Username Not Found 1");
             } else return response.json();
         })
         .catch(err => {
-            console.log("username not found")
-            throw new Error("Username Not Found");
+            console.log(err);
+            throw new Error("Username Not Found 2");
         })
         .then(githubuser => new Promise(resolve => {
             let img = document.createElement('img');

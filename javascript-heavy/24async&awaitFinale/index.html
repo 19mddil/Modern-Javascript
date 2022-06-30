@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let loadJason = async(link) => {
+            let response = await fetch(link);
+            if (response.status == 404) {
+                console.log("here");
+                throw new Error("bad link or username not found");
+            } else {
+                return await new Promise(resolve => setTimeout(() => {
+                        resolve(response.json())
+                    }, 5000)) // pretend the link is slow and searching
+            }
+        };
+        let get3secImage = async(githubuser) => {
+            let img = document.createElement('img');
+            img.src = githubuser.avatar_url;
+            img.className = "promise-avatar-example";
+            document.body.append(img);
+            Promise.resolve(setTimeout(() => {
+                img.remove();
+                console.log("finished downloading the pic");
+            }, 3000));
+        };
+
+        async function demo() {
+            let username = "19mdil";
+            document.body.style.backgroundColor = "red";
+            try {
+                let link = `https://api.github.com/users/${username}`;
+                let githubuser = await loadJason(link);
+                document.body.style.backgroundColor = "white";
+                get3secImage(githubuser);
+
+            } catch (err) {
+                console.log("bad username");
+            }
+
+
+
+        }
+        //demo();
+        // async function dd() {
+        //     try {
+        //         let x = await loadJason(`https://api.github.com/users/9mddil`);
+        //     } catch (err) {
+        //         console.log(err);
+        //     }
+        // }
+        // dd();
+        demo();
+    </script>
+</body>
+
+</html>
