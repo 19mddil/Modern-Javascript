@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function loadScript(src, callback) {
+            let script = document.createElement('script');
+            script.src = src;
+            script.onload = () => callback(null, script);
+            script.onerror = () => callback(new Error(`script load error from ${src}`));
+            document.head.append(script);
+        }
+
+        function promisify(f) {
+            return function(...args) {
+                return new Promise((resove, reject) => {
+                    function callback(err, script) {
+                        if (err) {
+                            reject()
+                        }
+                    }
+                })
+            }
+        }
+    </script>
+</body>
+
+</html>
