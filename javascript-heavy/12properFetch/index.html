@@ -71,9 +71,13 @@
     };
 
     async function demo() {
-        let username;;
-        await Promise.resolve().then(() => document.body.style.backgroundColor = 'red');
-        await Promise.resolve().then(() => username = prompt("enter the name", "19mddil"));
+        let username;
+        try {
+            await new Promise(resolve => resolve(document.body.style.backgroundColor = "red"));
+        } catch (err) {
+            console.log(err);
+        }
+        username = prompt("enter the name", "19mddil");
 
         let link = `https://api.github.com/users/${username}`;
         //let promise = new Promise(resolve => setTimeout(() => resolve(loadJason(link)), 2000));
