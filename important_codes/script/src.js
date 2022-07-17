@@ -1,1 +1,1 @@
-alert("Thomas would do everything for the problem.")
+console.log("Thomas would do everything for the problem.")
