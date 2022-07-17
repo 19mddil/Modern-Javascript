@@ -1,1 +1,8 @@
-console.log("Thomas would do everything for the problem.")
+function hello(name = "John") {
+    let phrase = `Hello, ${name}`;
+    tell(phrase);
+}
+
+function tell(phrase) {
+    console.log(`** ${phrase} **`);
+}
