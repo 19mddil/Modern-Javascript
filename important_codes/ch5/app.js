@@ -4,5 +4,5 @@ let arr2 = ['which', 'is', 'a', 'gorgeous', 'language'];
 arr.splice(3, 0, ...arr2);
 console.log(arr);
 let str = "hello";
-let strTest = [...str];
+let strTest = new Set([...str]);
 console.log(strTest);
