@@ -13,7 +13,7 @@ function request(runtime, messeage, problem) {
         timeId = setTimeout(sayHi, delay);
     };
     sayHi.counter = 0;
-    timeId = setTimeout(sayHi, delay);
+    timeId = setTimeout(sayHi, delay);//the caller
     setTimeout(() => { clearTimeout(timeId) }, runtime);
 }
 request(10000, "A Blessed Day!", { id1: false, id2: false, });
