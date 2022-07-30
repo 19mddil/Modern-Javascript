@@ -1,4 +1,5 @@
 'use strict'
+
 function curry(func) {
     return function curried(...args) {
         if (args.length >= func.length) {
