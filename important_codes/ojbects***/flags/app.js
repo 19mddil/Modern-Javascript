@@ -20,5 +20,6 @@ console.log(user);
 Object.defineProperties(user, {
     profession: { writable: false },
 })
-user.profession = 'store keeper';
-console.log(user);
+// user.profession = 'store keeper';
+// console.log(user);
+console.log(Object.getOwnPropertyDescriptors(user));
