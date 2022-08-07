@@ -15,18 +15,28 @@
     }
 
     console.log(Cat.prototype.constructor.name);
-    Cat.prototype = animal; // activated when new Cat("XXX") is called
+    // Cat.prototype = animal; // activated when new Cat("XXX") is called
+
     console.log(Cat.prototype.constructor.name);
 
     let cat1 = new Cat("Lara");
+    cat1 = Object.create(animal);
     cat1.eat();//it works
-    console.log(cat1.name);
+    console.log("here :" + cat1.name);
 
     console.log(cat1.constructor.name);
     cat1.constructor = Cat;//** fixed by only this line*/
     let cat2 = new cat1.constructor("Jasmin");// because the constructor is the function refers to Animal before.
-    console.log(cat2.name);// and shows undefined
+    console.log("Here : " + cat2.name);// and shows undefined
+    cat2 = Object.create(animal, {
+        jumps: {
+            value() {
+                console.log(this.name, "I jumps bruh");//why the hell its not getting its name
+            }
+        },
+    })
     cat2.eat();//it doesn't
+    cat2.jumps();
     /**
      function User(name) {
         this.name = name;
@@ -52,3 +62,4 @@
     let cat2 = new cat1.constructor("Jasmin");
     /**it works perfect because Cat.prototype is Cat */
 }
+//Hmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
