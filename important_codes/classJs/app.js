@@ -1,12 +1,18 @@
+'use strict'
 class User {
     constructor(name) {
         this.name = name;
     }
     sayHi() {
-        console.log(`Hi, from ${this.name}`);
+        console.log(this.name + " says, Hi!");
     }
 }
-let user1 = new User("Rahim");
-user1.sayHi();
-console.log(typeof user1);
-console.log(typeof User);
+class Thief {
+    constructor() {
+
+    }
+}
+console.log(User.prototype.constructor.name);
+console.log(User.prototype.sayHi);
+console.log(Object.getOwnPropertyNames(User.prototype));
+console.log(Thief);
