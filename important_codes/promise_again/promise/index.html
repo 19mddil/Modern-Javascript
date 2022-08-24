@@ -20,9 +20,16 @@
                 document.head.append(script);
             });
         }
-        let promise = loadScript("https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.js");
-        promise.then(
-            result => console.log(result.src), error => console.log(error)
+        loadScript('test/script.js').then(
+            result => loadScript('test/script1.js')
+        ).then(
+            result => loadScript('test/script2.js')
+        ).then(
+            () => {
+                sayHi();
+                sayHello();
+                sayBye();
+            }
         );
     </script>
 </body>
