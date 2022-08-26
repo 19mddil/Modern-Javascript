@@ -18,11 +18,39 @@
         // fetch('user.json')
         //     .then(response => response.json())
         //     .then(user => console.log(user.name));
+        class HttpError extends Error {
+            constructor(response) {
+                super(`${response.status} for ${response.url}`);
+                this.name = 'HttpError';
+                this.response = response;
+            }
+        }
         function loadJason(src) {
-            return fetch(src).then(response => response.json());
+            return fetch(src).then(response => {
+                if (response.status == 200) {
+                    return response.json();
+                }
+                else {
+                    throw new HttpError(response);
+                }
+            });
         }
         function loadGithubUser(name) {
-            return fetch(`https://api.github.com/users/${name}`).then(response => response.json());
+            document.body.style.background = 'red';
+            return new Promise(resolve => { setTimeout(() => resolve("ok"), 2000) })//pretend server is slow
+                .then(result => fetch(`https://api.github.com/users/${name}`))
+                .finally(() => {
+                    document.body.style.background = 'white';
+                    return new Promise(resolve => setTimeout(resolve));
+                })
+                .then(response => {
+                    if (response.status == 200) {
+                        return response.json();
+                    }
+                    else {
+                        throw new HttpError(response);
+                    }
+                });
         }
         function showAvatar(githubuser) {
             return new Promise(function (resolve, reject) {
@@ -31,6 +59,7 @@
                 document.body.append(img);
                 setTimeout(() => {
                     img.remove();
+                    document.body.style.background = 'grey';
                     resolve(githubuser);
                 }, 4000);
             });
@@ -38,7 +67,8 @@
         loadJason('user.json')
             .then(user => loadGithubUser(user.name))
             .then(githubuser => showAvatar(githubuser))
-            .then(githubuser => console.log(`finished downloading ${githubuser.name}`));
+            .then(githubuser => console.log(`finished downloading ${githubuser.name}`))
+            .catch(error => console.log(error));
     </script>
 </body>
 
