@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        fetch('user.json')
+            .then(response => response.text())
+            .then(text => console.log(text));
+        //Fetch makes a network request to the url and returns a promise. The promise resolves with a response object when the remote server responds with headers,but before the full response is downloaded.
+        //To read the full response, we should call a method response.text() : it returns a promise that resolves when the full text downloaded from the remote server, with that text as a result.
+        fetch('user.json')
+            .then(response => response.json())
+            .then(user => console.log(user.name));
+    </script>
+</body>
+
+</html>
