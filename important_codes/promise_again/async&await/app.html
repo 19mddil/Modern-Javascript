@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // fetch('user.json')
+        //     .then(response => response.text())
+        //     .then(text => console.log(text));
+        // //Fetch makes a network request to the url and returns a promise. The promise resolves with a response object when the remote server responds with headers,but before the full response is downloaded.
+        // //To read the full response, we should call a method response.text() : it returns a promise that resolves when the full text downloaded from the remote server, with that text as a result.
+        // fetch('user.json')
+        //     .then(response => response.json())
+        //     .then(user => console.log(user.name));
+        class HttpError extends Error {
+            constructor(response) {
+                super(`${response.status} for ${response.url}`);
+                this.name = 'HttpError';
+                this.response = response;
+            }
+        }
+        async function showAvatar(src) {
+
+            //reading json file
+
+            try {
+                let userResponse = await fetch(src);
+                let user;
+                if (userResponse.status == 200) {
+                    user = await userResponse.json();
+                }
+                else {
+                    throw new HttpError(userResponse);
+                }
+                //find github user
+                let pretendDealyer = await new Promise(resolve => setTimeout(() => resolve(document.body.style.background = 'red'), 2000));
+                let githubResponse = await fetch(`https://api.github.com/users/${user.name}`);
+                let githubUser;
+                if (githubResponse.status == 200) {
+                    githubUser = await githubResponse.json();
+                }
+                else {
+                    throw new HttpError(githubResponse);
+                }
+
+
+                //show avatar
+                let img = document.createElement('img');
+                img.src = githubUser.avatar_url;
+                document.body.style.background = 'white';
+                document.body.append(img);
+
+                let waiter = await new Promise(resolve => setTimeout(() => resolve("ok"), 3000));
+                document.body.style.background = 'grey';
+                img.remove();
+                console.log("The image is been removed");
+
+            } catch (err) {
+                console.log("err: " + err);
+            }
+        }
+        showAvatar('user.json');
+    </script>
+</body>
+
+</html>
