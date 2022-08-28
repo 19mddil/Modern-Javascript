@@ -12,3 +12,14 @@ while (!i.done) {
     flag = i.done;
 }
 console.log(i.value);
+
+//or
+
+for (let value of generatorSeq()) {
+    console.log(value);// but it doesn't show 3 :(
+}
+
+//Using spread operator
+
+let seq = [0, ...generatorSeq()];
+console.log(seq);
