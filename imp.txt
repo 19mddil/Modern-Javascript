@@ -1,0 +1,4 @@
+minifier and newFunction global issue
+polymorphism!
+Event loop: microtasks and macrotasks.
+
